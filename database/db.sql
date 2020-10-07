@@ -1,0 +1,21 @@
+CREATE DATABASE database_links;
+
+USE database_links;
+
+/*CREA TABLA*/
+CREATE TABLE users(
+    id INT(11) NOT NULL,
+    username VARCHAR(16) NOT NULL,
+    password VARCHAR(60) NOT NULL,
+    fullname VARCHAR(100) NOT NULL 
+);
+
+/*MODIFICA TABLA*/
+ALTER TABLE user 
+    ADD PRIMARY KEY (id);
+
+ALTER TABLE user  
+    MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 2;
+
+/*LA MUESTRA*/
+DESCRIBE users;
