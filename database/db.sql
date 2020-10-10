@@ -6,7 +6,7 @@ USE database_links;
 
 -- USERS TABLE --
 
-/*CREA TABLA*/
+-- CREA TABLA --
 CREATE TABLE users(
     id INT(11) NOT NULL,
     username VARCHAR(16) NOT NULL,
@@ -14,14 +14,14 @@ CREATE TABLE users(
     fullname VARCHAR(100) NOT NULL 
 );
 
-/*MODIFICA TABLA*/
+-- MODIFICA TABLA --
 ALTER TABLE users 
     ADD PRIMARY KEY (id);
 
 ALTER TABLE users  
     MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 2;
 
-/*LA MUESTRA*/
+-- LA MUESTRA --
 DESCRIBE users;
 
 -- LINKS TABLES --
