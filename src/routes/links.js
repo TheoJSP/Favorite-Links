@@ -3,7 +3,10 @@ const express = require("express");
 const router = express.Router();
 const pool = require("../database");
 
-//ACCIONES
+//         ACCIONES LINKS
+
+
+//              AÑADIR
 router.get("/add", (req, res) =>{
     res.render("links/add.hbs");
 });
@@ -17,26 +20,34 @@ router.post("/add", async(req, res)=>{
     };
     //GUARDA LOS DATOS EN LA DB
     await pool.query("INSERT INTO links set ?", [newLink]);
-    req.flash("success", "¡Link guardado de manera exitosa!");
+    req.flash("success", "¡Link save Sucefully!");
     res.redirect("/links/")
 });
 
+
+//          IMPREME LOS LINKS EN PANTALLA
 router.get("/", async(req, res)=>{  
     //PIDE LOS DATOS DE LA DB
     const links = await pool.query("SELECT * FROM links");
     res.render("links/list", {links} )
 });
 
+
+//             ELIMINAR
 router.get("/delete/:id", async(req, res)=>{
     const {id} = req.params;
     //ELIMINAR DATOS DE LA BASE DE DATOS
     await pool.query("DELETE FROM links WHERE ID = ?", [id]); 
+    req.flash("success", "¡Link Remove Succefully!");
+    res.redirect("/links/")
 });
 
+
+//               EDITAR
 router.get("/edit/:id", async(req, res)=>{
     const {id} = req.params;
     //OBETENER DATOS QUE GUARDA LA TABLA CON ID ESPECIFICO 
-    const links = await pool.query("SELECT * FROM links WHERE id = ?", [id]);
+    const links = await pool.query("SELECT * FROM links WHERE id = ?", [id]);;
     res.render("links/edit", {link: links[0]});
 });
 
@@ -50,8 +61,10 @@ router.post("/edit/:id", async(req, res)=>{
     }
     //ACTUALIZA DATOS DE LA DB
     await pool.query("UPDATE links set ? WHERE id = ?", [newLink, id]);
+    req.flash("success", "¡Link Update Succefully!")
     res.redirect("/links/");
 
 });
+
 
 module.exports = router;
