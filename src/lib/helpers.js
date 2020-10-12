@@ -12,7 +12,7 @@ helpers.encryptPassword = async (password) =>{
 //Para comprar encriptado y password
 helpers.matchPassword = async (password, savedPassword) =>{
     try{
-        await bcrypt.compare(password, savedPassword)
+        return await bcrypt.compare(password, savedPassword)
     }catch(e) {
         console.log(e)
     }
