@@ -17,7 +17,8 @@ router.post("/add", async(req, res)=>{
     const newLink = {
         title, 
         url,
-        description
+        description,
+        user_id: req.user.id
     };
     //GUARDA LOS DATOS EN LA DB
     await pool.query("INSERT INTO links set ?", [newLink]);
@@ -29,7 +30,7 @@ router.post("/add", async(req, res)=>{
 //          IMPREME LOS LINKS EN PANTALLA
 router.get("/", isLoggedIn,async(req, res)=>{  
     //PIDE LOS DATOS DE LA DB
-    const links = await pool.query("SELECT * FROM links");
+    const links = await pool.query("SELECT * FROM links WHERE user_id = ?", [req.user.id]);
     res.render("links/list", {links} )
 });
 
