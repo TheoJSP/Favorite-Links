@@ -2,13 +2,14 @@
 const express = require("express");
 const router = express.Router();
 const pool = require("../database");
+const { isLoggedIn } = require('../lib/auth');
 
 //         ACCIONES LINKS
 
 
 //              AÑADIR
-router.get("/add", (req, res) =>{
-    res.render("links/add.hbs");
+router.get("/add", isLoggedIn,(req, res) =>{
+    res.render("links/add");
 });
 
 router.post("/add", async(req, res)=>{
@@ -26,7 +27,7 @@ router.post("/add", async(req, res)=>{
 
 
 //          IMPREME LOS LINKS EN PANTALLA
-router.get("/", async(req, res)=>{  
+router.get("/", isLoggedIn,async(req, res)=>{  
     //PIDE LOS DATOS DE LA DB
     const links = await pool.query("SELECT * FROM links");
     res.render("links/list", {links} )
@@ -34,7 +35,7 @@ router.get("/", async(req, res)=>{
 
 
 //             ELIMINAR
-router.get("/delete/:id", async(req, res)=>{
+router.get("/delete/:id", isLoggedIn,async(req, res)=>{
     const {id} = req.params;
     //ELIMINAR DATOS DE LA BASE DE DATOS
     await pool.query("DELETE FROM links WHERE ID = ?", [id]); 
@@ -44,7 +45,7 @@ router.get("/delete/:id", async(req, res)=>{
 
 
 //               EDITAR
-router.get("/edit/:id", async(req, res)=>{
+router.get("/edit/:id",isLoggedIn, async(req, res)=>{
     const {id} = req.params;
     //OBETENER DATOS QUE GUARDA LA TABLA CON ID ESPECIFICO 
     const links = await pool.query("SELECT * FROM links WHERE id = ?", [id]);;
